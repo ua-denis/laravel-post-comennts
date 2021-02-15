@@ -11,8 +11,6 @@
                 class="mr-4"
                 small
                 @click="modale(true, comment.id, comment.parent_id, false)"
-                @click="dialogBtnTxt('create comment')"
-                @click="dialogTitle('create comment')"
             >
                 Reply
             </v-btn>
@@ -24,8 +22,6 @@
                 x-small
                 outlined
                 @click="modale(true, comment.id, comment.parent_id, true)"
-                @click="dialogBtnTxt('edit comment')"
-                @click="dialogTitle('Edit comment')"
             >
                 <v-icon>mdi-pencil</v-icon>
             </v-btn>
@@ -93,10 +89,23 @@
                 'setDialogCommentEdit'
             ]),
             modale(show, commentId, parentId, edit){
+                let btnTxt = '';
+                let title = '';
+
                 this.$store.commit('setDialogModal', show);
                 this.$store.commit('setDialogInputCommentId', commentId);
                 this.$store.commit('setDialogInputParentId', parentId);
                 this.$store.commit('setDialogCommentEdit', edit);
+                if(edit){
+                    btnTxt = 'edit comment';
+                    title = 'Edit comment';
+                }
+                else {
+                    btnTxt = 'create comment';
+                    title = 'Create comment';
+                }
+                this.dialogBtnTxt(btnTxt);
+                this.dialogTitle(title);
             },
             dialogBtnTxt(btnTxt){
                 this.$store.commit('setDialogBtnTxt', btnTxt);
